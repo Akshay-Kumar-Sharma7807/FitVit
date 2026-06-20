@@ -1,4 +1,4 @@
-# **App Name**: WellGenius
+# **App Name**: FitVit
 
 ## Core Features:
 

@@ -1,6 +1,6 @@
-# WellGenius: Your Personal AI Wellness Companion
+# FitVit: Your Personal AI Wellness Companion
 
-WellGenius is a full-stack web application designed to make healthy living simple, personal, and accessible. Using the power of generative AI, WellGenius provides users with tailored diet plans, workout routines, and smart tools to support their wellness journey.
+FitVit is a full-stack web application designed to make healthy living simple, personal, and accessible. Using the power of generative AI, FitVit provides users with tailored diet plans, workout routines, and smart tools to support their wellness journey.
 
 ## The Problem
 
@@ -9,7 +9,7 @@ In today's fast-paced world, maintaining a healthy lifestyle is a common goal, b
 - **Lack of Personalization:** Generic plans that don't fit individual goals, preferences, or fitness levels.
 - **Time Constraints:** The effort required to plan meals, create workout schedules, and make shopping lists.
 
-WellGenius tackles these problems by providing an intelligent, all-in-one platform that acts as a personal wellness expert.
+FitVit tackles these problems by providing an intelligent, all-in-one platform that acts as a personal wellness expert.
 
 ## Features
 
@@ -35,8 +35,8 @@ To run the project locally, you'll need to have Node.js and npm installed.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/wellgenius.git
-    cd wellgenius
+    git clone https://github.com/your-username/fitvit.git
+    cd fitvit
     ```
 
 2.  **Install dependencies:**

@@ -100,20 +100,20 @@ export function DietGuide() {
                     <FormItem><FormLabel>Preferred Cuisine (optional)</FormLabel><FormControl><Input placeholder="e.g., Italian, Mexican" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                 </div>
-                <Button type="submit" disabled={isDietLoading}>
+                <Button type="submit" disabled={isDietLoading} className="w-full sm:w-auto shadow-md shadow-primary/10 hover:shadow-primary/20 hover:scale-102 transition-all">
                   {isDietLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Thinking...</> : <><Sparkles className="mr-2 h-4 w-4" /> Get Suggestions</>}
                 </Button>
               </form>
             </Form>
-            {isDietLoading && <div className="grid md:grid-cols-2 gap-6 pt-6"><Skeleton className="h-32" /><Skeleton className="h-32" /></div>}
+            {isDietLoading && <div className="grid md:grid-cols-2 gap-6 pt-6"><Skeleton className="h-32 rounded-xl" /><Skeleton className="h-32 rounded-xl" /></div>}
             {dietSuggestions && (
-              <div className="pt-6 grid md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Meal Suggestions</h3>
+              <div className="pt-6 grid md:grid-cols-2 gap-6 border-t border-border/40">
+                <div className="p-4 bg-secondary/35 rounded-xl border border-border/40">
+                  <h3 className="font-semibold text-lg mb-2 text-foreground">Meal Suggestions</h3>
                   <ul className="list-disc pl-5 space-y-1 text-muted-foreground">{dietSuggestions.mealSuggestions.map((item, i) => <li key={i}>{item}</li>)}</ul>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-lg mb-2">Recipe Ideas</h3>
+                <div className="p-4 bg-secondary/35 rounded-xl border border-border/40">
+                  <h3 className="font-semibold text-lg mb-2 text-foreground">Recipe Ideas</h3>
                   <ul className="list-disc pl-5 space-y-1 text-muted-foreground">{dietSuggestions.recipeIdeas.map((item, i) => <li key={i}>{item}</li>)}</ul>
                 </div>
               </div>
@@ -131,17 +131,17 @@ export function DietGuide() {
             <Form {...shoppingForm}>
               <form onSubmit={shoppingForm.handleSubmit(onShoppingSubmit)} className="space-y-4">
                 <FormField control={shoppingForm.control} name="dietPlan" render={({ field }) => (
-                  <FormItem><FormLabel>Your Diet Plan</FormLabel><FormControl><Textarea rows={8} placeholder="Paste your diet plan or generate one from the 'Diet Suggestions' tab." {...field} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel>Your Diet Plan</FormLabel><FormControl><Textarea rows={8} className="resize-none" placeholder="Paste your diet plan or generate one from the 'Diet Suggestions' tab." {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={shoppingForm.control} name="userPreferences" render={({ field }) => (
-                  <FormItem><FormLabel>Shopping Preferences</FormLabel><FormControl><Textarea rows={4} placeholder="e.g., Organic only, budget of $100/week, prefer Whole Foods." {...field} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel>Shopping Preferences</FormLabel><FormControl><Textarea rows={4} className="resize-none" placeholder="e.g., Organic only, budget of $100/week, prefer Whole Foods." {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
-                <Button type="submit" disabled={isShoppingLoading}>
+                <Button type="submit" disabled={isShoppingLoading} className="w-full sm:w-auto shadow-md shadow-primary/10 hover:shadow-primary/20 hover:scale-102 transition-all">
                   {isShoppingLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating List...</> : <><Sparkles className="mr-2 h-4 w-4" /> Generate Shopping List</>}
                 </Button>
               </form>
             </Form>
-            {isShoppingLoading && <div className="space-y-4 pt-6"><Skeleton className="h-24" /><Skeleton className="h-24" /><Skeleton className="h-16" /></div>}
+            {isShoppingLoading && <div className="space-y-4 pt-6"><Skeleton className="h-24 rounded-xl" /><Skeleton className="h-24 rounded-xl" /><Skeleton className="h-16 rounded-xl" /></div>}
             {shoppingList && (
               <div className="pt-6 space-y-4">
                 <div>

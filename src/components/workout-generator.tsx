@@ -131,7 +131,7 @@ export function WorkoutGenerator() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" disabled={isLoading} className="w-full">
+              <Button type="submit" disabled={isLoading} className="w-full shadow-md shadow-primary/10 hover:shadow-primary/20 hover:scale-102 transition-all">
                 {isLoading ? (
                   <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating...</>
                 ) : (
@@ -146,35 +146,35 @@ export function WorkoutGenerator() {
       <div className="lg:col-span-2">
         {isLoading && (
           <div className="space-y-4">
-             <Card>
+             <Card className="rounded-xl border border-border/40">
                 <CardHeader>
-                    <Skeleton className="h-6 w-1/2" />
-                    <Skeleton className="h-4 w-1/4" />
+                    <Skeleton className="h-6 w-1/2 rounded-md" />
+                    <Skeleton className="h-4 w-1/4 rounded-md" />
                 </CardHeader>
                 <CardContent>
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-3/4 mb-4" />
-                    <Skeleton className="h-10 w-28" />
+                    <Skeleton className="h-4 w-full mb-2 rounded-md" />
+                    <Skeleton className="h-4 w-3/4 mb-4 rounded-md" />
+                    <Skeleton className="h-10 w-28 rounded-md" />
                 </CardContent>
             </Card>
-             <Card>
+             <Card className="rounded-xl border border-border/40">
                 <CardHeader>
-                    <Skeleton className="h-6 w-1/2" />
-                    <Skeleton className="h-4 w-1/4" />
+                    <Skeleton className="h-6 w-1/2 rounded-md" />
+                    <Skeleton className="h-4 w-1/4 rounded-md" />
                 </CardHeader>
                 <CardContent>
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-3/4 mb-4" />
-                    <Skeleton className="h-10 w-28" />
+                    <Skeleton className="h-4 w-full mb-2 rounded-md" />
+                    <Skeleton className="h-4 w-3/4 mb-4 rounded-md" />
+                    <Skeleton className="h-10 w-28 rounded-md" />
                 </CardContent>
             </Card>
           </div>
         )}
         {!isLoading && !workoutPlan && (
-          <Card className="flex items-center justify-center h-full min-h-[400px] border-dashed">
-            <div className="text-center">
+          <Card className="flex items-center justify-center h-full min-h-[400px] border-dashed border-2 rounded-xl">
+            <div className="text-center p-6">
               <h3 className="text-xl font-semibold">Your workout plan will appear here</h3>
-              <p className="text-muted-foreground">Fill in the details on the left to generate your personalized routine.</p>
+              <p className="text-muted-foreground mt-2 text-sm max-w-xs">Fill in the details on the left to generate your personalized routine.</p>
             </div>
           </Card>
         )}
@@ -182,15 +182,15 @@ export function WorkoutGenerator() {
           <div className="space-y-4">
             <h2 className="text-2xl font-bold font-headline">Your Custom Workout Routine</h2>
             {workoutPlan.workoutRoutine.map((exercise, index) => (
-              <Card key={index}>
+              <Card key={index} className="hover:border-primary/30 transition-all duration-300 hover:shadow-sm">
                 <CardHeader>
                   <CardTitle>{exercise.exerciseName}</CardTitle>
                   <CardDescription>{Math.round(exercise.duration / 60)} min</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="mb-4">{exercise.exerciseDescription}</p>
+                  <p className="mb-4 text-sm text-muted-foreground leading-relaxed">{exercise.exerciseDescription}</p>
                   <a href={exercise.videoUrl} target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline">Watch Video</Button>
+                    <Button variant="outline" className="hover:bg-secondary">Watch Video</Button>
                   </a>
                 </CardContent>
               </Card>
