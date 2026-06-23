@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Activity, Salad, HeartPulse, Leaf, Users, Flame, Droplet, CalendarRange } from "lucide-react";
+import { ArrowRight, Activity, Salad, HeartPulse, Leaf, Users, Flame, Droplet, CalendarRange, Scan } from "lucide-react";
 import Link from "next/link";
 import { ProgressChart } from "@/components/progress-chart";
 
@@ -111,7 +111,7 @@ export default function DashboardPage() {
       </div>
 
       {/* bottom actions */}
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="hover:border-primary/30 transition-all duration-300 hover:-translate-y-0.5 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-base font-semibold font-headline">AI Workout Plan</CardTitle>
@@ -133,6 +133,19 @@ export default function DashboardPage() {
             <p className="text-sm text-muted-foreground mb-4">Find healthy recipes and compile automated grocery orders.</p>
             <Link href="/dashboard/diet">
               <Button className="w-full">Find Recipes <ArrowRight className="ml-2 h-4 w-4" /></Button>
+            </Link>
+          </CardContent>
+        </Card>
+        <Card className="relative overflow-hidden hover:border-primary/40 transition-all duration-300 hover:-translate-y-0.5 shadow-sm border-primary/20 bg-gradient-to-br from-primary/5 to-accent/5">
+          <div className="absolute -right-4 -top-4 w-20 h-20 rounded-full bg-primary/10 blur-xl pointer-events-none" />
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-base font-semibold font-headline">AI Pose Coach</CardTitle>
+            <Scan className="h-5 w-5 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-4">Real-time form correction and rep counting using your camera.</p>
+            <Link href="/dashboard/pose-coach">
+              <Button className="w-full">Open Coach <ArrowRight className="ml-2 h-4 w-4" /></Button>
             </Link>
           </CardContent>
         </Card>
