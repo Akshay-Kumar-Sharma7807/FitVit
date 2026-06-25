@@ -2,15 +2,21 @@
 
 import { Bar, BarChart, CartesianGrid, XAxis, ResponsiveContainer } from "recharts"
 import { ChartTooltipContent, ChartContainer, ChartConfig } from "@/components/ui/chart"
+import { Skeleton } from "@/components/ui/skeleton"
 
-const chartData = [
-  { day: "Mon", workouts: 1 },
-  { day: "Tue", workouts: 1 },
+interface WorkoutLog {
+  day: string;
+  workouts: number;
+}
+
+const DEFAULT_DATA: WorkoutLog[] = [
+  { day: "Mon", workouts: 0 },
+  { day: "Tue", workouts: 0 },
   { day: "Wed", workouts: 0 },
-  { day: "Thu", workouts: 2 },
-  { day: "Fri", workouts: 1 },
+  { day: "Thu", workouts: 0 },
+  { day: "Fri", workouts: 0 },
   { day: "Sat", workouts: 0 },
-  { day: "Sun", workouts: 1 },
+  { day: "Sun", workouts: 0 },
 ];
 
 const chartConfig = {
@@ -20,7 +26,18 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function ProgressChart() {
+interface ProgressChartProps {
+  data?: WorkoutLog[];
+  loading?: boolean;
+}
+
+export function ProgressChart({ data, loading }: ProgressChartProps) {
+  if (loading) {
+    return <Skeleton className="min-h-[200px] w-full rounded-xl" />;
+  }
+
+  const chartData = data && data.length > 0 ? data : DEFAULT_DATA;
+
   return (
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
       <ResponsiveContainer width="100%" height={200}>

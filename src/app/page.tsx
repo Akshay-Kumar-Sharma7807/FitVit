@@ -3,12 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { ArrowRight, Bot, HeartPulse, Leaf, Sparkles, Star } from "lucide-react";
+import { ArrowRight, Bot, HeartPulse, Leaf, LogIn, Sparkles, Star, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const [date, setDate] = useState<Date | null>(null);
+  const { data: session } = useSession();
+  const ctaHref = session ? "/dashboard" : "/login";
 
   useEffect(() => {
     setDate(new Date());
@@ -27,16 +30,31 @@ export default function Home() {
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-primary"><path d="M12 22c-5 0-9-4.5-9-10 0-5.5 4-10 9-10s9 4.5 9 10c0 5.5-4 10-9 10z"></path><path d="M12 2a5 5 0 0 0-5 5c0 1.4.5 2.8 1.5 3.8A5 5 0 0 0 12 13a5 5 0 0 0 3.5-1.2c1-1 1.5-2.4 1.5-3.8A5 5 0 0 0 12 2z"></path></svg>
             <span className="text-2xl font-bold font-headline tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">FitVit</span>
           </Link>
-          <nav className="flex items-center space-x-6">
-            <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
+          <nav className="flex items-center space-x-4">
+            <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors hidden sm:block">
               About
             </Link>
             <ThemeToggle />
-            <Link href="/dashboard">
-              <Button size="sm" className="hidden sm:inline-flex shadow-sm hover:scale-105 transition-all">
-                Get Started <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+            {session ? (
+              <Link href="/dashboard">
+                <Button size="sm" className="hidden sm:inline-flex shadow-sm hover:scale-105 transition-all">
+                  Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            ) : (
+              <div className="hidden sm:flex items-center gap-2">
+                <Link href="/login">
+                  <Button size="sm" variant="ghost" className="hover:text-primary transition-colors">
+                    <LogIn className="mr-1.5 h-4 w-4" /> Login
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button size="sm" className="shadow-sm hover:scale-105 transition-all">
+                    <UserPlus className="mr-1.5 h-4 w-4" /> Sign Up
+                  </Button>
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
       </header>
@@ -56,7 +74,7 @@ export default function Home() {
               Achieve your fitness goals with bespoke diet guides, AI-generated workouts, and automated shopping lists. Built to optimize your healthy lifestyle.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-              <Link href="/dashboard" className="w-full sm:w-auto">
+              <Link href={ctaHref} className="w-full sm:w-auto">
                 <Button size="lg" className="w-full sm:w-auto px-8 shadow-md shadow-primary/10 hover:shadow-primary/20 hover:scale-105 transition-all">
                   Start Your Journey <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -251,7 +269,7 @@ export default function Home() {
               Start building routines today. It takes less than a minute to create your first customized plan.
             </p>
             <div className="mt-8">
-              <Link href="/dashboard">
+              <Link href={ctaHref}>
                 <Button size="lg" className="px-10 shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-105 transition-all">
                   Get Started For Free
                 </Button>

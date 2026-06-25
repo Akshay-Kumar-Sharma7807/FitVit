@@ -1,71 +1,121 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, Activity, Salad, HeartPulse, Leaf, Users, Flame, Droplet, CalendarRange, Scan } from "lucide-react";
 import Link from "next/link";
 import { ProgressChart } from "@/components/progress-chart";
+import { StatsUpdater } from "@/components/stats-updater";
+import { useUserProfile } from "@/hooks/use-user-profile";
+
+function StatSkeleton() {
+  return (
+    <Card>
+      <CardContent className="p-4 flex items-center gap-3.5">
+        <Skeleton className="h-10 w-10 rounded-xl" />
+        <div className="space-y-1.5">
+          <Skeleton className="h-3 w-20" />
+          <Skeleton className="h-6 w-16" />
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function DashboardPage() {
+  const { profile, loading, error, refetch } = useUserProfile();
+
+  const stats = profile?.stats;
+  const firstName = profile?.name?.split(" ")[0] ?? "there";
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto transition-colors duration-300">
       {/* Welcome Banner */}
       <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/10 via-accent/5 to-transparent p-6 md:p-8">
         <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-primary/15 blur-2xl pointer-events-none" />
         <div className="max-w-xl space-y-2">
-          <h1 className="text-3xl font-bold font-headline tracking-tight text-foreground sm:text-4xl">
-            Welcome back, Alex!
-          </h1>
-          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-            &ldquo;Your body can stand almost anything. It&apos;s your mind that you have to convince.&rdquo; Keep up the great consistency this week!
-          </p>
+          {loading ? (
+            <>
+              <Skeleton className="h-10 w-64 mb-2" />
+              <Skeleton className="h-4 w-80" />
+            </>
+          ) : error ? (
+            <>
+              <h1 className="text-3xl font-bold font-headline tracking-tight text-destructive sm:text-4xl">
+                Oops, something went wrong.
+              </h1>
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                Error loading data: {error}
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="text-3xl font-bold font-headline tracking-tight text-foreground sm:text-4xl">
+                Welcome back, {firstName}!
+              </h1>
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                &ldquo;Your body can stand almost anything. It&apos;s your mind that you have to convince.&rdquo; Keep up the great consistency this week!
+              </p>
+            </>
+          )}
         </div>
       </div>
 
       {/* Quick Stats Grid */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-        <Card className="hover:border-primary/30 transition-all duration-300">
-          <CardContent className="p-4 flex items-center gap-3.5">
-            <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
-              <Flame className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-medium">Active Streak</p>
-              <h4 className="text-xl font-bold font-headline mt-0.5">5 Days</h4>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="hover:border-primary/30 transition-all duration-300">
-          <CardContent className="p-4 flex items-center gap-3.5">
-            <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
-              <Droplet className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-medium">Hydration Level</p>
-              <h4 className="text-xl font-bold font-headline mt-0.5">1.2 L</h4>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="hover:border-primary/30 transition-all duration-300">
-          <CardContent className="p-4 flex items-center gap-3.5">
-            <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
-              <Activity className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-medium">Active Minutes</p>
-              <h4 className="text-xl font-bold font-headline mt-0.5">120 min</h4>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="hover:border-primary/30 transition-all duration-300">
-          <CardContent className="p-4 flex items-center gap-3.5">
-            <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
-              <CalendarRange className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground font-medium">Workouts Done</p>
-              <h4 className="text-xl font-bold font-headline mt-0.5">8 Completed</h4>
-            </div>
-          </CardContent>
-        </Card>
+        {loading ? (
+          <>
+            <StatSkeleton /><StatSkeleton /><StatSkeleton /><StatSkeleton />
+          </>
+        ) : (
+          <>
+            <Card className="hover:border-primary/30 transition-all duration-300">
+              <CardContent className="p-4 flex items-center gap-3.5">
+                <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
+                  <Flame className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground font-medium">Active Streak</p>
+                  <h4 className="text-xl font-bold font-headline mt-0.5">{stats?.streak ?? 0} Days</h4>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="hover:border-primary/30 transition-all duration-300">
+              <CardContent className="p-4 flex items-center gap-3.5">
+                <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
+                  <Droplet className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground font-medium">Hydration Level</p>
+                  <h4 className="text-xl font-bold font-headline mt-0.5">{stats?.hydrationLiters ?? 0} L</h4>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="hover:border-primary/30 transition-all duration-300">
+              <CardContent className="p-4 flex items-center gap-3.5">
+                <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
+                  <Activity className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground font-medium">Active Minutes</p>
+                  <h4 className="text-xl font-bold font-headline mt-0.5">{stats?.activeMinutes ?? 0} min</h4>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="hover:border-primary/30 transition-all duration-300">
+              <CardContent className="p-4 flex items-center gap-3.5">
+                <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
+                  <CalendarRange className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground font-medium">Workouts Done</p>
+                  <h4 className="text-xl font-bold font-headline mt-0.5">{stats?.workoutsCompleted ?? 0} Completed</h4>
+                </div>
+              </CardContent>
+            </Card>
+          </>
+        )}
       </div>
 
       {/* Main Grid */}
@@ -76,10 +126,10 @@ export default function DashboardPage() {
             <CardDescription>Your log counts for physical routines this week.</CardDescription>
           </CardHeader>
           <CardContent>
-            <ProgressChart />
+            <ProgressChart data={profile?.workoutLogs} loading={loading} />
           </CardContent>
         </Card>
-        
+
         <Card className="hover:shadow-sm transition-shadow duration-300">
           <CardHeader>
             <CardTitle>Today&apos;s Focus</CardTitle>
@@ -110,7 +160,14 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      {/* bottom actions */}
+      {/* Stats Logger */}
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="md:col-span-1">
+          <StatsUpdater stats={profile?.stats} onUpdate={refetch} />
+        </div>
+      </div>
+
+      {/* Bottom Actions */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="hover:border-primary/30 transition-all duration-300 hover:-translate-y-0.5 shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
