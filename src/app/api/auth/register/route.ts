@@ -4,6 +4,8 @@ import { z } from "zod";
 import connectDB from "@/lib/mongodb";
 import User from "@/lib/models/User";
 
+export const dynamic = "force-dynamic";
+
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),

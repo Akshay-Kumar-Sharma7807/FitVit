@@ -3,6 +3,8 @@ import { auth } from "@/auth";
 import connectDB from "@/lib/mongodb";
 import User from "@/lib/models/User";
 
+export const dynamic = "force-dynamic";
+
 // PATCH /api/user/stats — update any of the stats fields
 export async function PATCH(req: Request) {
   try {
